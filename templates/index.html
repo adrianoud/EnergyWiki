@@ -61,6 +61,9 @@
                             chart.setOption(result);
                         }
                     });
+                    chart.on('click',function(params){
+                    alert(params.name);
+                    });
                 });
             }
         )
@@ -80,6 +83,21 @@
                         success: function (result) {
                             map.setOption(result);
                         }
+                    });
+                    var a = new Array();
+                    map.on('click',function(params){
+                        var chart = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});
+                        $.ajax({
+                            type: "POST",
+                            data:{
+                            region: JSON.stringify(Array(params.name))
+                            },
+                            url: "http://127.0.0.1:5000/Chart",
+                            dataType: 'json',
+                            success: function (result) {
+                                chart.setOption(result);
+                            }
+                        });
                     });
                 });
             }

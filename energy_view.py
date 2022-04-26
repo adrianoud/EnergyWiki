@@ -51,6 +51,7 @@ def index():
 @app.route("/Chart", methods=['GET', 'POST'])
 def get_chart():
     regions = eval(request.form.get('region'))
+    print(type(regions),regions)
     c = line_base(regions)
     return c.dump_options_with_quotes()
 
