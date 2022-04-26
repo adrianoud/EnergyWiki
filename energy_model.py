@@ -12,7 +12,7 @@ import pandas as pd
 data = pd.read_excel('bp-stats-review-2021-all-data.xlsx', sheet_name=1, index_col=0, usecols=list(range(57)),
                      skiprows=2,
                      skipfooter=10, na_filter=True)
-data = data.dropna(axis=0, how='any')
+data = data.dropna(axis=0, how='all')
 data.index = data.index.str.strip()
 
 # axis：默认为 0，表示逢空值剔除整行，如果设置参数 axis＝1 表示逢空值去掉整列。
@@ -36,8 +36,13 @@ class Primary_Energy_Consumption:
     def get_years(self):
         return list(data.columns)
 
+    def get_year_data(self,year):
+        return list(data.loc[:,year].round(2))
+
+
 
 a = Primary_Energy_Consumption()
 print(type(a.get_data(['China', 'Canada'])))
 # print(a.get_region_list())
 # print(a.get_years())
+print(a.get_year_data(1965))
