@@ -39,10 +39,19 @@ class Primary_Energy_Consumption:
     def get_year_data(self,year):
         return list(data.loc[:,year].round(2))
 
+    def get_year_top10(self,year):
+        not_country = ['Total World', 'of which: OECD', 'Non-OECD', 'Total North America', 'Total Asia Pacific',
+                       'Total Europe', 'Total Middle East', 'European Union #', 'Total Africa', 'Total CIS',
+                       'Total S. & Cent. America']
+        data_2 = data.drop(axis=0,index=not_country)
+        top_10 = data_2.loc[:,year].nlargest(10)
+        return top_10.round(2)
 
 
-a = Primary_Energy_Consumption()
-print(type(a.get_data(['China', 'Canada'])))
-# print(a.get_region_list())
-# print(a.get_years())
-print(a.get_year_data(1965))
+
+# For functional test
+# a = Primary_Energy_Consumption()
+# print(a.get_data(['China', 'Canada'],2001,2003))
+# # print(a.get_region_list())
+# # print(a.get_years())
+# print(a.get_year_top10(2020))
