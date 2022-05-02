@@ -1,5 +1,6 @@
 var targetElement;
 $(document).ready(function(){
+// 可以直接类选择使用 interact(“.draggable”) 省去使用ByClass和迭代
     targetElement =  document.getElementsByClassName("draggable");
 //    alert(targetElement[1].getAttribute("id"))
     for(var k =0, length = targetElement.length; k< length; k++){
