@@ -6,22 +6,37 @@
     <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 <!--基于Flask框架的js文件需要使用url-for获取路径-->
     <script type="text/javascript"  src = "{{ url_for('static', filename = 'charts_gen.js') }}"></script>
+    <script type="text/javascript"  src = "{{ url_for('static', filename = 'drag_and_resize.js') }}"></script>
 <!--运行js文件时，其对象需要先被定义，其事件才会被监听，下文中，document为系统对象，已被定义，去掉document后，#year未定义，故无响应-->
-
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'energy.PNG') }}"></link>
     <title>能源百科</title>
+
+    <!--  box-sizing: border-box    告诉浏览器：你想要设置的边框和内边距的值是包含在 width 内的。-->
+    <style>
+    .draggable {
+      padding: 20px;
+      margin: 0.2%;
+      background-color: #29e;
+
+      box-sizing: border-box;
+    }
+    </style>
+
 </head>
+
 <body>
     <div>
-          <div style="width:10%; height:600px; float:left">
+          <div class="draggable" style="width:9.6%; height:600px; float:left">
                 <h3>选择数据类型:</h3>
                 <select id ="data_type">
                     <option>一次能源消耗情况</option>
                     <option>电力生产与消耗</option>
                 </select>
                 <h3>选择年份:</h3>
-                <select id="year";width="50px"; size= "28">
+                <select id="year";width="50px"; size= "24">
                     {% for i in year_list %}
                     <option>{{i}}</option>
                     {% endfor %}
@@ -29,11 +44,11 @@
         <!--    选择开始时间 <input type="text" id="start_year" value="1965" />-->
         <!--    选择结束时间 <input type="text" id="end_year" value="2020" />-->
           </div>
-          <div id="map" style="width:40%; height:600px; float:left; margin-top:15px" ></div>
-          <div id="bar" style="width:50%; height:600px; float:left; margin-top:15px" ></div>
+          <div class="draggable" id="map" style="width:39.6%; height:600px; float:left" ></div>
+          <div class="draggable" id="bar" style="width:49.6%; height:600px; float:left" ></div>
     </div>
     <div>
-        <div style="width:10%; height:500px; float:top; float:left">
+        <div class="draggable" style="width:9.6%; height:500px; float:top; float:left">
             <h3>选择国家或地区:</h3>
             <select id= "country" size= "24"  multiple="multiple">
                 {% for i in region_list %}
@@ -43,7 +58,7 @@
 <!--    选择开始时间 <input type="text" id="start_year" value="1965" />-->
 <!--    选择结束时间 <input type="text" id="end_year" value="2020" />-->
         </div>
-        <div id="line" style="width:90%; height:500px; float:left; margin-top:30px;" ></div>
+        <div class="draggable" id="line" style="width:89.6%; height:500px; float:left" ></div>
     </div>
 </body>
 </html>

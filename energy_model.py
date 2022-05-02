@@ -5,7 +5,6 @@ import pandas as pd
 # skiprows，skipfooter，跳过开头和最后几行
 # na_filter：代表将空格代替为n.a,和后续dropna函数联动
 
-# index与column分别代表行、列索引。
 
 # print(data.index)
 # print(data.columns)
@@ -23,6 +22,13 @@ data.index = data.index.str.strip()
 
 
 # print(data)
+# index与column分别代表行、列索引。
+# iloc利用索引，iloc[0],选择第一行，iloc[1],选择第二行
+# iloc[:,0],选择第一列
+# loc 利用标签，loc[['a','b']], 选择a,b两行
+# loc[:,['a','b']], 选择a,b两列
+# loc[df['a']='aaa'], 选择a为aaa的行
+# loc[df['a']='aaa',['b','c']] 选择a为aaa的b，c列
 
 
 class Primary_Energy_Consumption:
