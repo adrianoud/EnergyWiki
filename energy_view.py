@@ -24,7 +24,7 @@ def line_base(regions) -> Line:
     return c
 
 
-def bar_base(year) -> Bar:
+def bar_base(year=2020) -> Bar:
     c = Bar()
     temp = PMC.get_year_top10(year)
     c.add_xaxis(list(temp.index))
@@ -32,7 +32,7 @@ def bar_base(year) -> Bar:
     return c
 
 
-def map_base(year) -> Map:
+def map_base(year=2020) -> Map:
     c = Map()
     num = PMC.get_year_data(year)
     country = PMC.get_region_list()
@@ -49,9 +49,14 @@ def map_base(year) -> Map:
 
 @app.route('/')
 def index():
+    return render_template("index.html")
+
+
+@app.route('/pec')
+def pec():
     region_list = PMC.get_region_list()
     year_list = PMC.get_years()
-    return render_template("index.html", region_list=region_list, year_list=year_list)
+    return render_template("primary_energy.html", region_list=region_list, year_list=year_list)
 
 
 # controller 功能
@@ -64,15 +69,21 @@ def get_chart():
 
 @app.route("/Map", methods=['GET', 'POST'])
 def get_map():
-    year = int(request.form.get('year'))
-    c = map_base(year)
+    if request.form.get('year'):
+        year = int(request.form.get('year'))
+        c = map_base(year)
+    else:
+        c = map_base()
     return c.dump_options_with_quotes()
 
 
 @app.route("/Bar", methods=['GET', 'POST'])
 def get_bar():
-    year = int(request.form.get('year'))
-    c = bar_base(year)
+    if request.form.get('year'):
+        year = int(request.form.get('year'))
+        c = bar_base(year)
+    else:
+        c = bar_base()
     return c.dump_options_with_quotes()
 
 

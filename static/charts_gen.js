@@ -1,7 +1,9 @@
 $(document).ready(function(){
+    update_map()
+    update_bar()
     $("#year").change(update_map);            //  JS里面直接调用函数需要加括号，Jqury事件调用只需函数名 hello
     $("#year").change(update_bar);
-//    $("#map").mouseup(update_map);            //  这里div的resize 事件不被监听
+            //  这里div的resize 事件不被监听
     $("#country").change(function(){
         echarts.init(document.getElementById('line')).dispose();          // 清除缓存
         var chart = echarts.init(document.getElementById('line'), 'white', {renderer: 'canvas'});

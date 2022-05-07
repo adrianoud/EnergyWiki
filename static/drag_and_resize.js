@@ -7,6 +7,16 @@ $(document).ready(function(){
         interact(targetElement[k])
         .draggable({
             // enable inertial throwing
+            modifiers: [
+                interact.modifiers.snap({
+                    targets: [
+                        interact.snappers.grid({ x: 10, y: 10 })
+                    ],
+                    range: Infinity,
+                    relativePoints: [ { x: 0, y: 0 } ]
+                }),
+            ],
+
             inertia: true,
             // keep the element within the area of it's parent
     //        modifiers: [
@@ -37,7 +47,13 @@ $(document).ready(function(){
         .resizable({
                 // resize from all edges and corners
             edges: { left: true, right: true, bottom: true, top: true },
-
+            modifiers: [
+                interact.modifiers.snapSize({
+                    targets: [
+                        interact.snappers.grid({ width: 10, height: 10 }),
+                    ],
+                }),
+            ],
             listeners: {
               move (event) {
                 var target = event.target
@@ -67,19 +83,6 @@ $(document).ready(function(){
                 }
               },
             },
-            modifiers: [
-              // keep the edges inside the parent
-    //          interact.modifiers.restrictEdges({
-    //            outer: 'parent'
-    //          }),
-
-              // minimum size
-              interact.modifiers.restrictSize({
-                min: { width: 100, height: 50 }
-              })
-            ],
-
-    //    inertia: true
         })
     }
 })

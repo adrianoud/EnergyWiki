@@ -13,7 +13,7 @@
 <!--运行js文件时，其对象需要先被定义，其事件才会被监听，下文中，document为系统对象，已被定义，去掉document后，#year未定义，故无响应-->
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'energy.PNG') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'top-navi.css') }}">
-    <title>能源百科</title>
+    <title>一次能源</title>
 
     <!--  box-sizing: border-box    告诉浏览器：你想要设置的边框和内边距的值是包含在 width 内的。-->
     <style>
@@ -29,14 +29,32 @@
 </head>
 
 <body>
-    <div class="top">
-            <ul>
-            <li><a href="/pec" target="main">一次能源</a></li>
-            <li><a href="/logout">注销</a></li>
-            </ul>
+    <div style="margin:0; width:100%">
+          <div style="width:200px; height:500px">
+                <h3>选择年份:</h3>
+                <select id="year" size= "24">
+                    {% for i in year_list %}
+                    <option>{{i}}</option>
+                    {% endfor %}
+                </select>
+        <!--    选择开始时间 <input type="text" id="start_year" value="1965" />-->
+        <!--    选择结束时间 <input type="text" id="end_year" value="2020" />-->
+          </div>
+          <div  id="map" style="width:40%; height:520px" ></div>
+          <div  id="bar" style="width:40%; height:520px" ></div>
     </div>
-    <div class="main" style="margin:0; width:100%; height:1200px; background-color:#424648">
-        <iframe id="frame" scrolling="no" frameborder="no" border="0" src = "{{ url_for('pec') }}" style="width:100%;height:100%" name ="main" >
+    <div style="margin-left:0px; margin-top:5px; width:100%">
+        <div  style="width:200px; height:600px">
+            <h3>选择国家或地区:</h3>
+            <select id= "country" size= "24"  multiple="multiple">
+                {% for i in region_list %}
+                <option class="list">{{i}}</option>
+                {% endfor %}
+            </select>
+<!--    选择开始时间 <input type="text" id="start_year" value="1965" />-->
+<!--    选择结束时间 <input type="text" id="end_year" value="2020" />-->
+        </div>
+        <div id="line" style="width:80%; height:550px" ></div>
     </div>
 
 <!--    <button onclick="save()"></button>-->

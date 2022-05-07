@@ -1,25 +1,39 @@
-$(document).ready(function(){
-    var targetElement = document.getElementById("target");
-    alert(targetElement);
-    interact(targetElement)
-      .resizable({
-        edges: { top: true, left: true, bottom: true, right: true },
-        listeners: {
-          move: function (event) {
-            let { x, y } = event.target.dataset
+interact(".abc").resizable({
+  edges: { left: true, right: true, bottom: true, top: true },
+  modifiers: [
+    interact.modifiers.snapSize({
+      targets: [
+        interact.snappers.grid({ width: 30, height: 30 }),
+      ],
+    }),
+  ],
+  listeners: {
+              move (event) {
+                var target = event.target
+                var x = (parseFloat(target.getAttribute('data-x')) || 0)
+                var y = (parseFloat(target.getAttribute('data-y')) || 0)
 
-            x = (parseFloat(x) || 0) + event.deltaRect.left
-            y = (parseFloat(y) || 0) + event.deltaRect.top
+                // update the element's style
+                target.style.width = event.rect.width + 'px'
+                target.style.height = event.rect.height + 'px'
 
-            Object.assign(event.target.style, {
-              width: `${event.rect.width}px`,
-              height: `${event.rect.height}px`,
-              transform: `translate(${x}px, ${y}px)`
-            })
+                // translate when resizing from top or left edges
+                x += event.deltaRect.left
+                y += event.deltaRect.top
 
-            Object.assign(event.target.dataset, { x, y })
-          }
-        }
-      })
+                target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
+
+                target.setAttribute('data-x', x)
+                target.setAttribute('data-y', y)
+    //            target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+              },
+              end (event){
+                if (event.target.getAttribute("id") == 'map'){
+                    update_map();
+                }
+                else if(event.target.getAttribute("id") == 'bar'){
+                    update_bar();
+                }
+              },
+            },
 })
-
