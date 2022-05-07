@@ -13,7 +13,7 @@ PMC = Primary_Energy_Consumption()
 Name_Map_Data = {"United States": "US", "Russia": "Russian Federation", "Korea": "South Korea"}
 
 
-def line_base(regions) -> Line:
+def line_base(regions=['China', 'US']) -> Line:
     c = Line()
     c.add_xaxis([str(year) for year in PMC.get_years()])  # 仅支持字符串
     for region in regions:
@@ -63,7 +63,10 @@ def pec():
 @app.route("/Chart", methods=['GET', 'POST'])
 def get_chart():
     regions = eval(request.form.get('region'))
-    c = line_base(regions)
+    if len(regions) > 0:
+        c = line_base(regions)
+    else:
+        c = line_base()
     return c.dump_options_with_quotes()
 
 
