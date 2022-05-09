@@ -6,26 +6,14 @@
     <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
     <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/china.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 <!--基于Flask框架的js文件需要使用url-for获取路径-->
     <script type="text/javascript"  src = "{{ url_for('static', filename = 'charts_gen.js') }}"></script>
-    <script type="text/javascript"  src = "{{ url_for('static', filename = 'drag_and_resize.js') }}"></script>
 <!--运行js文件时，其对象需要先被定义，其事件才会被监听，下文中，document为系统对象，已被定义，去掉document后，#year未定义，故无响应-->
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'energy.PNG') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'top-navi.css') }}">
     <title>一次能源</title>
 
     <!--  box-sizing: border-box    告诉浏览器：你想要设置的边框和内边距的值是包含在 width 内的。-->
-    <style>
-    .draggable {
-      padding: 20px;
-      margin: 10px;
-      background-color: #29e;
-      box-sizing: border-box;
-      margin-left:0;
-      margin-top:0;
-    }
-    </style>
 </head>
 
 <body>
