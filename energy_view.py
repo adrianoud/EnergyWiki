@@ -90,11 +90,7 @@ def get_bar():
     return c.dump_options_with_quotes()
 
 
-@app.route('/config')
-def config():
-    return render_template("config.html")
-
-
 if __name__ == '__main__':
     app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
     app.run(debug=True)
+

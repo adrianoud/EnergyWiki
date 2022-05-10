@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript"  src = "{{ url_for('static', filename = 'add_dashboard.js') }}"></script>
+<!--    模板可以在内部js文件中使用，但无法在外部js中使用-->
+    <script>
+        var link= "{{ url_for('config') }}"
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'top-navi.css') }}">
+    <style>
+        table { border-collapse: collapse;}
+        table,table tr th, table tr td { border:1px solid #000000; }
+        #add_dashboard {
+            font-family: "tahoma", "宋体"; /*www.52css.com*/
+            font-size:9pt; color: #003399;
+            border: 1px #003399 solid;
+            color:#006699;
+            border-bottom: #93bee2 1px solid;
+            border-left: #93bee2 1px solid;
+            border-right: #93bee2 1px solid;
+            border-top: #93bee2 1px solid;
+            background-image:url(../images/bluebuttonbg.gif);
+            background-color: #e8f4ff;
+            cursor: hand;
+            font-style: normal ;
+            width:80px;
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+<div name= "table" style="margin:0; width:100%; height:1050px" >
+    <form name="from" method="post">
+        <table  style="margin-left:30px; width:70%; align:center">
+
+            <input type="button" id="add_dashboard" style="margin-left:65%; margin-top:1%" value="增加图表" />
+
+            </br>
+            </br>
+            <tr>
+                <th align="center" valign="middle" width= "100">图表ID</th>
+                <th align="center" valign="middle" width= "200">图表名称</th>
+                <th align="center" valign="middle" width= "200">图表描述</th>
+                <th align="center" valign="middle" width= "200">图表链接</th>
+                <th align="center" valign="middle" width= "200">操作</th>
+            </tr>
+            {% for a in dashboards %}
+            <tr>
+                <td align="center" valign="middle"><input type="text" value="{{a.id}}" readonly="readonly" disabled="disabled" /></td>
+                <td align="center" valign="middle"><input type="text" name="{{a.id}}N" value="{{a.name}}" readonly="readonly"/></td>
+                <td align="center" valign="middle"><input type="text" name="{{a.id}}D" value="{{a.desc}}" readonly="readonly"/></td>
+                <td align="center" valign="middle"><input type="text" name="{{a.id}}C" value="TBD" readonly="readonly"/></td>
+                <td align="center" valign="middle">
+
+                <input type="button" value="编辑" class="edit" id= "edit_{{a.id}}" >
+                <input type="button" value="详情" class="detail" id= "detail_{{a.id}}" >
+                <input type="button" value="删除" id= "delete_{{a.id}}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <dialog style="width=40%;height:15%">
+    <form method="POST" action="/add_dashboard">
+        图表名称<input id="name" name="name" type="text" value="请输入图表名称">
+        <br/>
+        <br/>
+        图表描述<input id="decs" name="desc" type="text" value="请输入图表描述">
+        <br/>
+        <br/>
+        <button type="submit" class="close" align="right">提交</button>
+    </form>
+</dialog>
+</div>
+
+<!--<button class="show">showModal</button>-->
+<!--<button class="returnValue">returnValue</button>-->
+
+
+
+</body>
+</html>
