@@ -16,16 +16,36 @@ def dashboard():
 def add_dashboard():
     name = request.form.get("name")
     desc = request.form.get("desc")
-    Dashboard.create(name=name, desc=desc)
+    html_file = """        <div id="config_zone" name="{{id}}" style="margin:0;width:100%; height:1100px">
+            <div class="draggable" id="aaa"> </div>
+            <div class="draggable" id="bbb"> </div>
+            <div class="draggable" id="ccc"> </div>
+            <div class="draggable" id="ddd"> </div>
+        </div>"""
+    Dashboard.create(name=name, desc=desc, html_file=html_file)
     return redirect(url_for('dashboard'))
-    # return redirect('/dashboard')
 
 
-@app_dl.route('/config')
-def config():
-    return render_template("config.html")
+@app_dl.route('/config/<dashboard_id>', methods=['GET', 'POST'])
+def config(dashboard_id):
+    return render_template("config.html", id=dashboard_id)
+
+
+@app_dl.route('/update/<dashboard_id>', methods=['GET', 'POST'])
+def update(dashboard_id):
+    html = Dashboard.select().where(Dashboard.id == dashboard_id).first().html_file
+    print(html)
+    return html
+
+
+@app_dl.route('/config/save_config_dashboard/<dashboard_id>', methods=['GET', 'POST'])
+def save_config_dashboard(dashboard_id):
+    a_id = int(dashboard_id)
+    html = request.form.get("html")
+    Dashboard.update(html_file=html).where(Dashboard.id == a_id).execute()
+    return "success"
 
 
 if __name__ == '__main__':
     app_dl.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
-    app_dl.run(port=5001, debug=True)
+    app_dl.run(port=5050, debug=True)

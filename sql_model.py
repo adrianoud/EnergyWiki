@@ -13,7 +13,7 @@ class Dashboard(Model):
     id = AutoField(primary_key=True)
     name = CharField()
     desc = CharField()
-    html_file = CharField()
+    html_file = CharField(10000)
 
     class Meta:
         database = database
