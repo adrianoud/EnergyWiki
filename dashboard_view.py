@@ -18,9 +18,6 @@ def add_dashboard():
     desc = request.form.get("desc")
     html_file = """        <div id="config_zone" name="{{id}}" style="margin:0;width:100%; height:1100px">
             <div class="draggable" id="aaa"> </div>
-            <div class="draggable" id="bbb"> </div>
-            <div class="draggable" id="ccc"> </div>
-            <div class="draggable" id="ddd"> </div>
         </div>"""
     Dashboard.create(name=name, desc=desc, html_file=html_file)
     return redirect(url_for('dashboard'))
@@ -28,7 +25,8 @@ def add_dashboard():
 
 @app_dl.route('/config/<dashboard_id>', methods=['GET', 'POST'])
 def config(dashboard_id):
-    return render_template("config.html", id=dashboard_id)
+    name = Dashboard.select().where(Dashboard.id == dashboard_id).first().name
+    return render_template("config.html", id=dashboard_id, name=name)
 
 
 @app_dl.route('/update/<dashboard_id>', methods=['GET', 'POST'])
