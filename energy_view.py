@@ -90,6 +90,11 @@ def get_bar():
     return c.dump_options_with_quotes()
 
 
+@app.route("/homepage", methods=['GET', 'POST'])
+def homepage():
+    return render_template("homepage.html")
+
+
 if __name__ == '__main__':
     app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"
     app.run(debug=True)
