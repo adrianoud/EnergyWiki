@@ -12,6 +12,13 @@ def dashboard():
     return render_template("dashboard_list.html", dashboards=dashboards)
 
 
+@app_dl.route('/cd')
+def cd():
+    dashboards = Dashboard.select()
+    print(dashboards)
+    return render_template("Config_Dashboard.html", dashboards=dashboards)
+
+
 @app_dl.route('/add_dashboard', methods=['GET', 'POST'])
 def add_dashboard():
     name = request.form.get("name")
@@ -20,7 +27,7 @@ def add_dashboard():
             <div class="draggable" id="aaa"> </div>
         </div>"""
     Dashboard.create(name=name, desc=desc, html_file=html_file)
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('cd'))
 
 
 @app_dl.route('/config/<dashboard_id>', methods=['GET', 'POST'])

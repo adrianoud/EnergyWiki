@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/jquery-easyui-1.9.15/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../static/jquery-easyui-1.9.15/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../static/jquery-easyui-1.9.15/demo/demo.css">
+	<script type="text/javascript" src="../static/jquery-easyui-1.9.15/jquery.min.js"></script>
+	<script type="text/javascript" src="../static/jquery-easyui-1.9.15/jquery.easyui.min.js"></script>
+	<script type="text/javascript"  src = "{{ url_for('static', filename = 'dashboard_list.js') }}"></script>
+</head>
+<body>
+<form name="dashboard_list" method="post">
+	<table id="dg">
+		<thead>
+			<tr>
+				<th data-options="field:'id',width:100">Id</th>
+				<th data-options="field:'name',width:100">Name</th>
+				<th data-options="field:'desc',width:300">Desc</th>
+				<th data-options="field:'html',width:1200">Html</th>
+				<th data-options="field:'operation',width:250">Operation</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for a in dashboards %}
+			<tr>
+				<td>{{a.id}}</td><td>{{a.name}}</td><td>{{a.desc}}</td><td>{{a.html_file}}</td>
+				<td>
+					<input type="button" value="编辑" class="edit" name= "{{a.id}}" >
+					<input type="button" value="详情" class="detail" name= "{{a.id}}" >
+					<input type="button" value="删除" id= "delete_{{a.id}}">
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</form>
+<div id="dlg" class="easyui-dialog" title="Add Dashboard" data-options="iconCls:'icon-add',closed:true,model:false" style="width:400px;height:200px;padding:10px">
+	<form id="ff" method="post" action="/add_dashboard">
+		图表名称:<input class="easyui-textbox" id="name" name="name" data-options="required:true,prompt:'请输入图表名称'">
+		<br/>
+		<br/>
+		图表描述:<input class="easyui-textbox" id="decs" name="desc" data-options="required:true,prompt:'请输入图表描述'">
+		<br/>
+		<br/>
+		<button type="submit" class="easyui-linkbutton" >提交</button>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
+	</form>
+</div>
+
+<script>
+	$('#dg').datagrid({
+	toolbar: [{
+		iconCls: 'icon-add',
+		handler: function(){
+			$('#dlg').dialog('open')
+		}
+	},'-',{
+		iconCls: 'icon-help',
+		handler: function(){}
+	}]
+	});
+
+	function submitForm(){
+		$('#ff').form('submit',{
+			url: "/add_dashboard"
+		});
+		$('#dlg').dialog('close')
+	}
+
+	function clearForm(){
+		$('#ff').form('clear');
+	}
+
+</script>
+</body>
+</html>

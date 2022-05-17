@@ -49,7 +49,7 @@ def map_base(year=2020) -> Map:
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("homepage.html")
 
 
 @app.route('/pec')
@@ -88,12 +88,6 @@ def get_bar():
     else:
         c = bar_base()
     return c.dump_options_with_quotes()
-
-
-@app.route("/homepage", methods=['GET', 'POST'])
-def homepage():
-    return render_template("homepage.html")
-
 
 if __name__ == '__main__':
     app.config['JSONIFY_MIMETYPE'] = "application/json; charset=utf-8"

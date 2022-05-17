@@ -1,9 +1,11 @@
-var targetElement;
+
 $(document).ready(function(){
-// 可以直接类选择使用 interact(“.draggable”) 省去使用ByClass和迭代
-    targetElement =  document.getElementsByClassName("draggable");
-//    alert(targetElement[1].getAttribute("id"))
+// 一旦元素使用了interact，必须使用这儿的事件监听，而不能使用原生的jQuery事件
     interact('.draggable')
+    .on('tap', function (event) {
+        alert(event.target.getAttribute("id"));
+    })
+
     .draggable({
         // enable inertial throwing
         modifiers: [
@@ -29,6 +31,9 @@ $(document).ready(function(){
 
         listeners: {
             // call this function on every dragmove event
+            start (event) {
+//              alert(event.target.getAttribute("id"))
+            },
             move: dragMoveListener,
 
             // call this function on every dragend event

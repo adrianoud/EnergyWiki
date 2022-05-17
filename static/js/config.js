@@ -30,4 +30,8 @@ $(document).ready(function(){
             }
         });
     })
+
+    $('#aaa').click(function(){
+        alert("hello");
+    })
 })
